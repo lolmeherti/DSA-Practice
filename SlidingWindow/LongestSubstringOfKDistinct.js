@@ -7,15 +7,15 @@ longestSubstring = (string, k) => {
   let currentWindowlength = 0;
   let start_window = 0,
     maxLength = 1;
-  for (let i = 0; i < string.length; i++) {
-    let char = string[i];
-    map[char] = i;
+  for (let index = 0; index < string.length; index++) {
+    let char = string[index];
+    map[char] = index;
     if (Object.keys(map).length > k) {
       start_window = Math.min.apply(null, Object.values(map));
       delete map[string[start_window]];
       start_window++;
     }
-    currentWindowlength = i - start_window + 1;
+    currentWindowlength = index - start_window + 1;
     maxLength = Math.max(currentWindowlength, maxLength);
   }
   return maxLength;
