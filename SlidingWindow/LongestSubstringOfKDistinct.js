@@ -9,7 +9,7 @@ longestSubstring = (string, k) => {
   // Initialize maxLength as 0
   let maxLength = 0;
   // Initialize a count of unique characters in the window
-  let count = 0;
+  let uniqueCharCount = 0;
 
   // Iterate over the string with the right pointer
   for (let right = 0; right < string.length; right++) {
@@ -23,16 +23,16 @@ longestSubstring = (string, k) => {
     // If the current character is first seen in the window
     if (map[string[right]] == 1) {
       // increment the count of unique characters
-      count++;
+      uniqueCharCount++;
     }
     // When the number of unique characters in the window exceeds k
-    while (count > k) {
+    while (uniqueCharCount > k) {
       // Decrement the count of the character at the left pointer
       map[string[left]]--;
       // If the count of the character becomes 0
       if (map[string[left]] == 0) {
         // decrement the count of unique characters
-        count--;
+        uniqueCharCount--;
       }
       // move the left pointer
       left++;
