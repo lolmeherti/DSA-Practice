@@ -1,57 +1,45 @@
 //longest substring length with k distinct characters
 
-let inputString = "AAAHHHHIIBBBCCCCCCCCCTTTTTTTTTT";
-
-// longestSubstring = (string, k) => {
-//   let map = {};
-//   let currentWindowlength = 0;
-//   let start_window = 0,
-//     maxLength = 1;
-//   for (let index = 0; index < string.length; index++) {
-//     let char = string[index];
-//     map[char] = index;
-//     if (Object.keys(map).length > k) {
-//       start_window = Math.min.apply(null, Object.values(map));
-//       delete map[string[start_window]];
-//       start_window++;
-//     }
-
-//     console.log(map);
-
-//     currentWindowlength = index - start_window + 1;
-//     maxLength = Math.max(currentWindowlength, maxLength);
-//   }
-//   return maxLength;
-// };
-
-// console.log(longestSubstring(inputString, 2));
-
+let inputString = "AAAHHHHIIBBBCCCCCCCCCCTTTTTTTTTT";
 longestSubstring = (string, k) => {
+  // Initialize an empty map to store the frequency of each character in the window
   let map = {};
-  let distinctChars = [];
-  let currentLength = 0;
-  let maxLength = 1;
+  // Initialize left pointer at the beginning of the string
+  let left = 0;
+  // Initialize maxLength as 0
+  let maxLength = 0;
+  // Initialize a count of unique characters in the window
+  let count = 0;
 
-  for (let index = 0; index < string.length; index++) {
-    if (!map[string[index]]) {
-      distinctChars.push(string[index]);
-      map[string[index]] = 1;
-    } else {
-      map[string[index]] += 1;
+  // Iterate over the string with the right pointer
+  for (let right = 0; right < string.length; right++) {
+    // If the character is not already in the map
+    if (!map[string[right]]) {
+      // Initialize it with a value of 0
+      map[string[right]] = 0;
     }
-  }
-
-  for (let index = 0; index < distinctChars.length; index++) {
-    currentLength += map[distinctChars[index]];
-    if (index >= k - 1) {
-      maxLength = Math.max(maxLength, currentLength);
-      console.log(currentLength);
-      currentLength -= map[distinctChars[index - (k - 1)]];
-      currentLength;
+    // Increment the count of the current character
+    map[string[right]]++;
+    // If the current character is first seen in the window
+    if (map[string[right]] == 1) {
+      // increment the count of unique characters
+      count++;
     }
+    // When the number of unique characters in the window exceeds k
+    while (count > k) {
+      // Decrement the count of the character at the left pointer
+      map[string[left]]--;
+      // If the count of the character becomes 0
+      if (map[string[left]] == 0) {
+        // decrement the count of unique characters
+        count--;
+      }
+      // move the left pointer
+      left++;
+    }
+    // Update the maximum length substring
+    maxLength = Math.max(maxLength, right - left + 1);
   }
-
   return maxLength;
 };
-
-console.log(longestSubstring(inputString, 3));
+console.log(longestSubstring(inputString, 2));
