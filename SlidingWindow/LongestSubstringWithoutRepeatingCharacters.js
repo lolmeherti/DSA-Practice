@@ -9,31 +9,23 @@
 // Explanation: The answer is "abc", with the length of 3.
 
 let longestSubstringOfUniqueCharacters = (string) => {
-  let uniqueChars = [];
-  let maxStringLength = 0;
-  let currentStringLength = 0;
+  let leftPointer = 0;
+  let rightPointer = 0;
+  let maxLength = 0;
+  let charSet = new Set();
 
-  for (let end = 0; end < string.length; end++) {
-    if (!uniqueChars.includes(string[end])) {
-      //console.log(`pushing ${string[end]}`);
-      uniqueChars.push(string[end]);
+  while (rightPointer < string.length) {
+    if (!charSet.has(string[rightPointer])) {
+      charSet.add(string[rightPointer]);
+      maxLength = Math.max(maxLength, charSet.size);
+      rightPointer++;
     } else {
-      while (uniqueChars.includes(string[end])) {
-        //console.log(`removing ${string[end]}`);
-        uniqueChars.shift();
-      }
-
-      uniqueChars.push(string[end]);
-    }
-
-    currentStringLength = uniqueChars.length;
-
-    if (maxStringLength < currentStringLength) {
-      maxStringLength = Math.max(maxStringLength, currentStringLength);
+      charSet.delete(string[leftPointer]);
+      leftPointer++;
     }
   }
-  //console.log(uniqueChars);
-  return maxStringLength;
+
+  return maxLength;
 };
 
 console.log(longestSubstringOfUniqueCharacters("aab"));
