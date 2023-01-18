@@ -13,7 +13,6 @@ let checkInclusion = (string1, string2) => {
   let matched = 0;
 
   for (let index = 0; index < string2.length; index++) {
-
     console.log(`string 1 char: ${string1[endIndexS1]}`);
     console.log(`string 2 char: ${string2[index]}`);
 
