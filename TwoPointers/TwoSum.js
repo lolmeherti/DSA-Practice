@@ -12,27 +12,52 @@
 // Output: [0,1]
 // Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
 
+//two pointers solution
 var twoSum = function(nums, target) {
-    let previousValues = {};
+    let leftPointer = 0;
+    let rightPointer =  nums.length - 1;
 
-    for(let index = 0; index<nums.length; index++)
+    while(leftPointer < rightPointer)
     {
-        let missingValue = target - nums[index];
-
-        console.log(`current value: ${nums[index]}`);
-        console.log(`missing value: ${missingValue}`);
-
-        if(missingValue in previousValues)
+        if(nums[leftPointer] + nums[rightPointer] == target)
         {
-            return [previousValues[missingValue], index];
+            return [leftPointer, rightPointer];
+        } 
+        
+        if(nums[leftPointer] + nums[rightPointer])
+        {
+            rightPointer -= 1;
         } else {
-            previousValues[nums[index]] = index;
+            leftPointer += 1;
         }
-
-        console.log(previousValues);
     }
 
     return [];
 };
+
+
+//old but good solution//
+// var twoSum = function(nums, target) {
+//     let previousValues = {};
+
+//     for(let index = 0; index<nums.length; index++)
+//     {
+//         let missingValue = target - nums[index];
+
+//         console.log(`current value: ${nums[index]}`);
+//         console.log(`missing value: ${missingValue}`);
+
+//         if(missingValue in previousValues)
+//         {
+//             return [previousValues[missingValue], index];
+//         } else {
+//             previousValues[nums[index]] = index;
+//         }
+
+//         console.log(previousValues);
+//     }
+
+//     return [];
+// };
 
 console.log(twoSum([2,7,11,15], 9));
