@@ -8,6 +8,7 @@
 
 $inputString = "40 - 22 = 1x";
 function missingDigit($string) {
+
     if (strlen($string) < 1) {
         return null;
     }
@@ -20,32 +21,40 @@ function missingDigit($string) {
     $result = $stringToParts[4];
 
     if (preg_match('/[x]/', $firstNumber) == true) {
-        $originalFirstNumber = $firstNumber;
-        $start = 0;
-        $end = 9;
-    } else if (preg_match('/[x]/', $secondNumber) == true) {
-        $originalSecondNumber = $secondNumber;
-        $start = 0;
-        $end = 9;
-    } else {
-        $originalResult = $result;
-        $start = 0;
-        $end = 9;
-    }
+        $xIndex = strpos($firstNumber, 'x');
 
-    for ($i = $start; $i <= $end; $i++) {
-        if (isset($originalFirstNumber)) {
-            $firstNumber = str_replace("x", $i, $originalFirstNumber);
-        } else if (isset($originalSecondNumber)) {
-            $secondNumber = str_replace("x", $i, $originalSecondNumber);
-        } else {
-            $result = str_replace("x", $i, $originalResult);
+        for($i = 0; $i < 9; $i++)
+        {
+            $firstNumber = substr_replace($firstNumber, $i, $xIndex, 1);
+
+            if(calculateOutcome($firstNumber, $secondNumber, $operator) == intval($result))
+            {
+                return $i;
+            }
         }
+    } else if (preg_match('/[x]/', $secondNumber) == true) {
+        $xIndex = strpos($secondNumber, 'x');
 
-        $outcome = calculateOutcome($firstNumber, $secondNumber, $operator);
+        for($i = 0; $i < 9; $i++)
+        {
+            $secondNumber = substr_replace($secondNumber, $i, $xIndex, 1);
 
-        if (intval($outcome) === intval($result)) {
-            return $i;
+            if(calculateOutcome($firstNumber, $secondNumber, $operator) == intval($result))
+            {
+                return $i;
+            }
+        }
+    } else {
+        $xIndex = strpos($result, 'x');
+
+        for($i = 0; $i < 9; $i++)
+        {
+            $result = substr_replace($result, $i, $xIndex, 1);
+
+            if(calculateOutcome($firstNumber, $secondNumber, $operator) == intval($result))
+            {
+                return $i;
+            }
         }
     }
 
