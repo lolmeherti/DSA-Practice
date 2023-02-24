@@ -8,7 +8,11 @@ function maxSubArray($nums) {
     $largestSum = $nums[0];
     $currentSum = $nums[0];
     for ($i = 1; $i < $n; $i++) {
+        //if our sum so far is smaller than the current number
+        //start over with the current number
         $currentSum = max($nums[$i], $currentSum + $nums[$i]);
+
+
         $largestSum = max($largestSum, $currentSum);
     }
     echo $largestSum;
