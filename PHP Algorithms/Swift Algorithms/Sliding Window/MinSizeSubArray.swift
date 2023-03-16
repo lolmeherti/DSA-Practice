@@ -1,3 +1,4 @@
+//ONLY A PAIR PROGRAMMING EXERCISE!
 // target = 7, nums = [2,3,1,2,4,3]
 // [1, 1, 1, 1, 1, 1, 23] O(2n)
 // currentSum = nums[start]
