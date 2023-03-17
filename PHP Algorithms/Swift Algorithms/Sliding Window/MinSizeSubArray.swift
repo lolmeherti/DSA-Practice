@@ -34,3 +34,37 @@
 //   return digit
   
 // }
+
+class Solution 
+{
+    func minSubArrayLen(_ target: Int, _ nums: [Int]) -> Int 
+    {
+        var digits = 0
+        var start = 0
+        var currentSum = 0
+
+        for i in 0...nums.count - 1
+        {
+            if(nums[i] >= target || nums[0] >= target)
+            {
+                return 1
+            }
+
+            currentSum += nums[i]
+
+            while(currentSum >= target)
+            {
+                if(digits == 0)
+                {
+                    digits = i - start + 1
+                }
+
+                digits = min(digits, i - start + 1)
+                currentSum -= nums[start]
+                start += 1
+            }
+        }
+
+        return digits
+    }
+}
