@@ -13,7 +13,7 @@ function minimumSizeSubArrayLargerThanTarget(array $nums,int $target) : int
 {
     if(empty($nums))
     {
-        return -1;
+        return 0;
     }
 
     if(count($nums) < 2 && $nums[0] >= $target)
@@ -30,7 +30,7 @@ function minimumSizeSubArrayLargerThanTarget(array $nums,int $target) : int
     {
         $currentSum += $nums[$i];
         $numsForSum++;
-        
+
         while($currentSum >= $target)
         {
             $result = min($result, $numsForSum);
