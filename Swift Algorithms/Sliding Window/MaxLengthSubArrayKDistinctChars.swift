@@ -1,40 +1,49 @@
-// Description
-// Given a string S, find the length of the longest substring T that contains at most k distinct characters.
+/*
+ @param s: A string
+ @param k: An integer
+ @return: An integer
+*/
+import Foundation
 
-// Example
-// Example 1:
+func lengthOfLongestSubstringKDistinct(_ s: String, _ k: Int) -> Int 
+{
+   var stringsEncountered:[String:Int] = [:]
+   var maxSubstring:Int = 0
+   var currentSubstringLength:Int = 0
+   var leftMostIndex:Int = 0
+    var i = 0
+    var stringToArray = Array(s)
 
-// Input: S = "WORLD" and k = 4
-// Output: 4
-// Explanation: T = "WORL" or "ORLD"
+     for char in stringToArray
+    {
+        if(stringsEncountered.keys.contains(String(char)))
+        {
+            stringsEncountered[String(char)] += 1
+        } 
+        else 
+        {
+            stringsEncountered[String(char)] = 1
+        }
 
-// longestSubstring(S, k):
-// 	stringsEncountered = {}
-//   maxSubstring = 0
-//   currentSubstringLength = 0
-//   leftMostIndex = 0
-  
-//   for(i = 0; i < S.length; i++) {
-//   	if(stringsEncountered.contains(S[i])) {
-//     	stringsEncountered[S[i]] += 1
-//     } else {
-//     	stringsEncountered[S[i]] = 1
-//     }
-    
-//     currentSubstringLength += 1
-    
-//     //triggers when we have more than 3 distinct characters inside our hashmap
-//     while(Object.keys(stringsEncountered).length > k) {
-    
-//     currentSubstringLength -= 1
-//     stringsEncountered[S[leftMostIndex]] -= 1
-//     if(stringsEncountered[S[leftMostIndex]] === 0) {
-//     	Object.DELETE stringsEncountered[S[leftMostIndex]]
-//     }
-    
-//     leftMostIndex += 1
-//     }
+        currentSubstringLength += 1
 
-//    maxSubstring = Math.max(maxSubstring, currentSubstringLength)
-//   }
-// 	return maxSubstring
+        while(stringsEncountered.count > k)
+        {
+            currentSubstringLength -= 1
+            stringsEncountered[stringToArray[leftMostIndex]] -= 1
+
+            if(stringsEncountered[leftMostIndex] === 0)
+            {
+                stringsEncountered.removeValue(forKey: stringToArray[leftMostIndex])
+            }
+
+            leftMostIndex += 1
+        }
+
+        maxSubstring = max(currentSubstringLength, maxSubstring)
+    }
+
+    return maxSubstring
+}
+
+lengthOfLongestSubstringKDistinct("WORLD", 4)
