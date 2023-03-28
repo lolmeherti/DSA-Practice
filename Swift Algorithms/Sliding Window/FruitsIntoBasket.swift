@@ -69,7 +69,33 @@
 
 
 
+var totalFruit = function(fruits) 
+{
 
+    let currentFruits= new Map();
+    let maxFruitsCount = 0;
+    let left = 0;
+    
+    if(fruits.length <=2)
+    {
+      return fruits.length
+    }
+    
+    for (let right = 0; right < fruits.length; right++)
+    {
+        currentFruits.set(fruits[right], right);
+        if(currentFruits.size > 2)//this is a temporary magic number, means fruits types
+        {
+          const lowestIndex = smallest(currentFruits);
+          left = currentFruits.get(lowestIndex) + 1
+          currentFruits.delete(lowestIndex);
+        }
+          maxFruitsCount = Math.max(maxFruitsCount, right - left + 1);
+    }
+    
+    return maxFruitsCount
+};
+const smallest = (map) => [...map].reduce((a, b) => a[1] < b[1] ? a : b)[0];
 
 
 
