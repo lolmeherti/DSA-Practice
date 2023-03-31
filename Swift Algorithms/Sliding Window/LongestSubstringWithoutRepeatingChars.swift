@@ -3,36 +3,34 @@
 
 // Example 1:
 
-Input: s = "abcafbcbb"
-Output: 3
-Explanation: The answer is "abc", with the length of 3.
+// Input: s = "abcafbcbb"
+// Output: 3
+// Explanation: The answer is "abc", with the length of 3.
 
-lengthOfLongestSubstring(s) {
-  charsEncountered = {}
-  currentLengthOfSubstring = 0
-  maxLengthOfSubstring = 0
-  left = 0
-  
-	for(i; i < s.length; i++) {
-		if(charsEncouhntered[s[i]] === undefined) {
-    	charsEncouhntered[s[i]] = 1
+var lengthOfLongestSubstring = function(string) {
+  let uniqueChars = [];
+  let maxStringLength = 0;
+  let currentStringLength = 0;
+
+  for (let end = 0; end < string.length; end++) {
+    if (!uniqueChars.includes(string[end])) {
+      //console.log(`pushing ${string[end]}`);
+      uniqueChars.push(string[end]);
     } else {
-    	charsEncouhntered[s[i]] += 1
-    }
-    
-    currentLengthOfSubstring += 1
-    
-    while(charsEncouhntered[s[i]] > 1) {
-    	charsEncouhntered[s[left]] -= 1
-      currentLengthOfSubstring -= 1
-      if (charsEncountered[s[left]] === 0) {
-        delete charsEncountered[s[left]]
+      while (uniqueChars.includes(string[end])) {
+        //console.log(`removing ${string[end]}`);
+        uniqueChars.shift();
       }
-      left += 1
+
+      uniqueChars.push(string[end]);
     }
-    
-    maxLengthOfSubstring = Math.max(maxLengthOfSubstring, currentLengthOfSubstring)
+
+    currentStringLength = uniqueChars.length;
+
+    if (maxStringLength < currentStringLength) {
+      maxStringLength = Math.max(maxStringLength, currentStringLength);
+    }
   }
-  
-  return maxLengthOfSubstring
-}
+  //console.log(uniqueChars);
+  return maxStringLength;
+};

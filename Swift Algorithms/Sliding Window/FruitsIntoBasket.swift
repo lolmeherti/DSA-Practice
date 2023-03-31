@@ -67,8 +67,6 @@
 //     return maxFruitsCount
 // };
 
-
-
 var totalFruit = function(fruits) 
 {
 
