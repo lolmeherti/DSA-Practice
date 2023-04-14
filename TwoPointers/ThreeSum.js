@@ -11,16 +11,28 @@
 // Notice that the order of the output and the order of the triplets does not matter.
 
 const threeSum = function(nums) {
-    let result = []
-    nums = nums.sort()
-    for(let targetIndex = 0; targetIndex < nums.length - 2; targetIndex++) {
+  let result = []
+      nums = nums.sort(function(a, b) {
+      return a - b;
+    });
+  for(let targetIndex = 0; targetIndex < nums.length - 2; targetIndex++) {
+      if(nums[targetIndex] === nums[targetIndex - 1]) {
+        continue
+      }
       let target = 0 - nums[targetIndex] //
       let start = targetIndex + 1
       let end = nums.length - 1
       while(start !== end) {
           if(nums[start] + nums[end] === target) {
-            result.push([nums[targetIndex], nums[start], nums[end]])
-            end--
+                result.push([nums[targetIndex], nums[start], nums[end]])
+               end--
+                while (start < end && nums[start] === nums[start - 1]) {
+                  start++;
+              }
+
+              while (start < end && nums[end] === nums[end + 1]) {
+                  end--;
+              }
           } else if(nums[start] + nums[end] < target) {
             start++
           } else {
@@ -28,7 +40,5 @@ const threeSum = function(nums) {
           }
       }
     }
-  let set  = new Set(result.map(JSON.stringify));
-  let returnArray = Array.from(set).map(JSON.parse);
-      return returnArray
+    return result
 };
